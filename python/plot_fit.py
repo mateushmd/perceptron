@@ -26,21 +26,23 @@ def generate_session_bars(folder_name, title):
     plot_df['Metric'] = plot_df['Metric'].replace({'mean': 'Average', 'max': 'Maximum'})
 
     sns.set_theme(style="whitegrid")
+    sns.set_context("talk")
+
     plt.figure(figsize=(12, 7))
     
     ax = sns.barplot(x='Strategy', y='Time', hue='Metric', data=plot_df, palette='viridis')
 
     plt.yscale('log')
 
-    plt.title(f'Performance Analysis: {title} (10 Sessions)', fontsize=16, pad=20)
-    plt.ylabel('Total Time (Seconds) - Log Scale', fontsize=13)
-    plt.xlabel('Strategy', fontsize=13)
+    plt.title(f'Performance Analysis: {title} (10 Sessions)', fontsize=20, pad=20)
+    plt.ylabel('Total Time (Seconds) - Log Scale', fontsize=22)
+    plt.xlabel('Strategy', fontsize=22)
 
     for p in ax.patches:
         h = p.get_height()
         if h > 0:
             ax.annotate(f'{h:.2f}s', (p.get_x() + p.get_width() / 2., h),
-                        ha='center', va='bottom', fontsize=9, fontweight='bold',
+                        ha='center', va='bottom', fontsize=16, fontweight='bold',
                         xytext=(0, 5), textcoords='offset points')
 
     plt.tight_layout()

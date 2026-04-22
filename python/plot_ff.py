@@ -14,20 +14,45 @@ def generate_master_plot(results_dir, output_path):
 
     master_df = pd.concat(dataframes, ignore_index=True)
 
+    master_df['Strategy'] = master_df['Strategy'].str.replace('_OpenMP', '', case=False)
+
+    master_df['Strategy'] = master_df['Strategy'].str.replace('_', ' ')
+
+    seq_data = master_df[master_df['Strategy'] == 'Sequential']
+    if seq_data.empty:
+        print("Erro: Dados sequenciais não encontrados para calcular o Speedup.")
+        return
+    
+    avg_seq_time = seq_data['TotalTime'].mean()
+
+    master_df['Speedup'] = avg_seq_time / master_df['TotalTime']
+
+    plot_df = master_df[master_df['Strategy'] != 'Sequential'].copy()
+
     sns.set_theme(style="whitegrid")
-    plt.figure(figsize=(12, 7))
+    sns.set_context("talk") 
 
-    ax = sns.boxplot(x='Strategy', y='Throughput', data=master_df, 
-                     palette='viridis', width=0.6)
+    plt.figure(figsize=(12, 8)) 
 
-    plt.yscale('log') 
+    ax = sns.boxplot(x='Strategy', y='Speedup', data=plot_df, 
+                     palette='viridis', width=0.5)
 
-    plt.title('Performance Comparison: Parallelization Strategies (Log Scale)', fontsize=16)
-    plt.ylabel('Throughput (Samples/sec)', fontsize=13)
-    plt.xlabel('Implementation Strategy', fontsize=13)
+    plt.axhline(1.0, color='red', linestyle='--', linewidth=2, label='Sequential Baseline')
+
+    plt.title('Performance Comparison: Parallelization Speedup', fontsize=25, pad=20)
+    
+    plt.ylabel('Speedup (x)', fontsize=25, labelpad=15)
+    plt.xlabel('Implementation Strategy', fontsize=25, labelpad=15)
+    
+    plt.xticks(fontsize=25) 
+    plt.yticks(fontsize=25)
+    
+    plt.legend(fontsize=25, loc='upper right', frameon=True)
+
+    plt.tight_layout()
     
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
-    print(f"Master Chart generated: {output_path}")
+    print(f"generated: {output_path}")
 
 os.makedirs('./plots', exist_ok=True)
-generate_master_plot('./results/ff', './plots/master_comparison.png')
+generate_master_plot('./results/ff', './plots/speedup_comparison.png')

@@ -21,14 +21,16 @@ def plot_accuracy(folder_name):
     master_df = pd.concat(dataframes, ignore_index=True)
 
     sns.set_theme(style="whitegrid")
+    sns.set_context("talk")
+
     plt.figure(figsize=(12, 6))
 
     ax = sns.lineplot(data=master_df, x='Instance', y='Accuracy', hue='Strategy', 
                       marker='o', linewidth=2.5, alpha=0.8)
 
-    plt.title(f'Accuracy Analysis: Fit routine', fontsize=16, pad=20)
-    plt.ylabel('Validation Accuracy', fontsize=13)
-    plt.xlabel('Training Session (Instance)', fontsize=13)
+    plt.title(f'Accuracy Analysis: Fit routine', fontsize=25, pad=20)
+    plt.ylabel('Validation Accuracy', fontsize=25)
+    plt.xlabel('Training Session (Instance)', fontsize=25)
     plt.xticks(range(10))
     
     plt.ylim(0.85, 1.0) 
