@@ -13,7 +13,7 @@ def generate_efficiency_plot(results_dir, output_path):
     master_df['Threads'] = master_df['Strategy'].str.extract(r'(\d+)').astype(int)
     avg_seq_time = master_df[master_df['Threads'] == 1]['TotalTime'].mean()
     master_df['Speedup'] = avg_seq_time / master_df['TotalTime']
-    master_df['Efficiency'] = master_df['Speedup'] / master_df['Threads']
+    master_df['Efficiency'] = master_df['Speedup'] / master_df['Threads'].clip(upper=4)
 
     plot_df = master_df[master_df['Threads'] != 1].copy()
     plot_df = plot_df.sort_values(by='Threads', ascending=False)
@@ -34,7 +34,7 @@ def generate_efficiency_plot(results_dir, output_path):
     plt.axhline(1.0, color='green', linestyle='--', linewidth=3, label='Ideal Efficiency (1.0)')
 
     plt.title('Parallel Efficiency: Thread Scalability', fontsize=30, pad=30)
-    plt.ylabel('Efficiency ($\eta = S_p / N_{threads}$)', fontsize=25, labelpad=20)
+    plt.ylabel('Efficiency ($\eta = S_p / N_{cores}$)', fontsize=25, labelpad=20)
     plt.xlabel('Number of Threads', fontsize=25, labelpad=20)
     
     plt.xticks(fontsize=25) 
