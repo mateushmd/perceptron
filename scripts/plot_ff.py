@@ -41,7 +41,7 @@ def generate_master_plot(results_dir, output_path):
 
     plt.title('Performance Comparison: Parallelization Speedup', fontsize=25, pad=20)
     
-    plt.ylabel('Speedup (x)', fontsize=25, labelpad=15)
+    plt.ylabel('Speedup', fontsize=25, labelpad=15)
     plt.xlabel('Implementation Strategy', fontsize=25, labelpad=15)
     
     plt.xticks(fontsize=25) 

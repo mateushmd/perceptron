@@ -42,11 +42,11 @@ def plot_threads(folder_name):
 
     plt.tight_layout()
     plt.savefig(output_image, dpi=300)
-    print(f"Trend chart saved: {output_image}")
+    print(f"generated: {output_image}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python plot.py <folder_name>")
+        print("usage: python plot.py <folder_name>")
     else:
         os.makedirs('./plots', exist_ok=True)
         plot_threads(sys.argv[1])

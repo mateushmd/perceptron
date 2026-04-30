@@ -23,7 +23,7 @@ def generate_master_plot(results_dir, output_path):
     master_df['Speedup'] = avg_seq_time / master_df['TotalTime']
 
     plot_df = master_df[master_df['Threads'] != 1].copy()
-    plot_df = plot_df.sort_values(by='Threads', ascending=False)
+    plot_df = plot_df.sort_values(by='Threads', ascending=True)
 
     plot_df['Threads'] = plot_df['Threads'].astype(str)
     thread_order = plot_df['Threads'].unique() 
@@ -38,7 +38,7 @@ def generate_master_plot(results_dir, output_path):
     plt.axhline(1.0, color='red', linestyle='--', linewidth=3, label='Sequential Baseline')
 
     plt.title('Performance Comparison: Fit Routine Speedup', fontsize=30, pad=30)
-    plt.ylabel('Speedup (x)', fontsize=25, labelpad=20)
+    plt.ylabel('Speedup', fontsize=25, labelpad=20)
     plt.xlabel('Number of Threads', fontsize=25, labelpad=20)
     
     plt.xticks(fontsize=25) 
@@ -48,7 +48,7 @@ def generate_master_plot(results_dir, output_path):
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
-    print(f"Gráfico gerado em ordem descendente: {output_path}")
+    print(f"generated: {output_path}")
 
 os.makedirs('./plots', exist_ok=True)
 generate_master_plot('./results/inter-sample-vectorized', './plots/fit_speedup_comparison.png')

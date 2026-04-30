@@ -16,7 +16,7 @@ def generate_efficiency_plot(results_dir, output_path):
     master_df['Efficiency'] = master_df['Speedup'] / master_df['Threads'].clip(upper=4)
 
     plot_df = master_df[master_df['Threads'] != 1].copy()
-    plot_df = plot_df.sort_values(by='Threads', ascending=False)
+    plot_df = plot_df.sort_values(by='Threads', ascending=True)
     
     plot_df['Threads_Str'] = plot_df['Threads'].astype(str)
     thread_order = plot_df['Threads_Str'].unique()
@@ -46,7 +46,7 @@ def generate_efficiency_plot(results_dir, output_path):
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
-    print(f"Gráfico ajustado gerado: {output_path} (Y-Limit: {y_upper_limit:.2f})")
+    print(f"generated: {output_path} (Y-Limit: {y_upper_limit:.2f})")
 
 os.makedirs('./plots', exist_ok=True)
 generate_efficiency_plot('./results/inter-sample-vectorized', './plots/fit_efficiency_threads.png')

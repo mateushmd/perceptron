@@ -38,11 +38,11 @@ def plot_accuracy(folder_name):
     plt.legend(title='Strategy', bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     plt.savefig(output_image, dpi=300)
-    print(f"Convergence plot saved: {output_image}")
+    print(f"generated: {output_image}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python plot_convergence.py <folder_name>")
+        print("usage: python plot_convergence.py <folder_name>")
     else:
         os.makedirs('./plots', exist_ok=True)
         plot_accuracy(sys.argv[1])

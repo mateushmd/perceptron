@@ -47,7 +47,7 @@ def generate_session_bars(folder_name, title):
 
     plt.tight_layout()
     plt.savefig(output_image, dpi=300)
-    print(f"Bar chart saved: {output_image}")
+    print(f"generated: {output_image}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
