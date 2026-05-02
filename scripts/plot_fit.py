@@ -12,9 +12,10 @@ def generate_session_bars(folder_name, title):
         print(f"Error: Directory '{results_dir}' not found.")
         return
 
-    all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv')]
+    all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv') and not f.startswith('1')]
     dataframes = []
     for f in all_files:
+         
         df = pd.read_csv(os.path.join(results_dir, f), skipinitialspace=True)
         dataframes.append(df)
     
@@ -30,11 +31,12 @@ def generate_session_bars(folder_name, title):
 
     plt.figure(figsize=(12, 7))
     
-    ax = sns.barplot(x='Strategy', y='Time', hue='Metric', data=plot_df, palette='viridis')
+    ax = sns.barplot(x='Strategy', y='Time', hue='Metric', data=plot_df, palette='viridis',
+            order=['Sequential', 'Intra-layer', 'Inter-sample', 'Inter-sample SIMD'])
 
     plt.yscale('log')
 
-    plt.title(f'Performance Analysis: {title} (10 Sessions)', fontsize=20, pad=20)
+    plt.title(f'Performance Analysis: {title}', fontsize=20, pad=20)
     plt.ylabel('Total Time (Seconds) - Log Scale', fontsize=22)
     plt.xlabel('Strategy', fontsize=22)
 
