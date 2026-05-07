@@ -3,7 +3,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-def generate_efficiency_plot(results_dir, output_path):
+def generate():
+    results_dir = './results/inter-sample-vectorized'
+    output_path = './plots/chart_6.png'
+
     all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv')]
     if not all_files: return
 
@@ -36,7 +39,7 @@ def generate_efficiency_plot(results_dir, output_path):
     plt.title('Parallel Efficiency: Thread Scalability', fontsize=30, pad=30)
     plt.ylabel('Efficiency ($\eta = S_p / N_{cores}$)', fontsize=25, labelpad=20)
     plt.xlabel('Number of Threads', fontsize=25, labelpad=20)
-    
+   
     plt.xticks(fontsize=25) 
     plt.yticks(fontsize=25)
     
@@ -49,4 +52,4 @@ def generate_efficiency_plot(results_dir, output_path):
     print(f"generated: {output_path} (Y-Limit: {y_upper_limit:.2f})")
 
 os.makedirs('./plots', exist_ok=True)
-generate_efficiency_plot('./results/inter-sample-vectorized', './plots/fit_efficiency_threads.png')
+generate()

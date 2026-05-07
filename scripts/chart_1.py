@@ -3,7 +3,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-def generate_master_plot(results_dir, output_path):
+def generate():
+    results_dir = './results/ff'
+    output_path = './plots/chart_1.png'
+
     all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv')]
     dataframes = []
 
@@ -55,4 +58,4 @@ def generate_master_plot(results_dir, output_path):
     print(f"generated: {output_path}")
 
 os.makedirs('./plots', exist_ok=True)
-generate_master_plot('./results/ff', './plots/speedup_comparison.png')
+generate()

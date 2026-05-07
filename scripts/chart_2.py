@@ -2,12 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-import sys
 
-def generate_session_bars(folder_name, title):
-    results_dir = os.path.join('./results', folder_name)
-    output_image = os.path.join('./plots', f"{folder_name}_bars.png")
-    
+def generate():
+    results_dir = './results/fit8'
+    output_path = './plots/chart_2.png'
+
     if not os.path.exists(results_dir):
         print(f"Error: Directory '{results_dir}' not found.")
         return
@@ -36,7 +35,7 @@ def generate_session_bars(folder_name, title):
 
     plt.yscale('log')
 
-    plt.title(f'Performance Analysis: {title}', fontsize=20, pad=20)
+    plt.title(f'Performance Analysis: Fit routine with 8 threads', fontsize=20, pad=20)
     plt.ylabel('Total Time (Seconds) - Log Scale', fontsize=22)
     plt.xlabel('Strategy', fontsize=22)
 
@@ -48,12 +47,8 @@ def generate_session_bars(folder_name, title):
                         xytext=(0, 5), textcoords='offset points')
 
     plt.tight_layout()
-    plt.savefig(output_image, dpi=300)
-    print(f"generated: {output_image}")
+    plt.savefig(output_path, dpi=300)
+    print(f"generated: {output_path}")
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python plot.py <folder_name> <title>")
-    else:
-        os.makedirs('./plots', exist_ok=True)
-        generate_session_bars(sys.argv[1], sys.argv[2])
+os.makedirs('./plots', exist_ok=True)
+generate()
