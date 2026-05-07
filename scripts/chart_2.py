@@ -5,7 +5,7 @@ import os
 
 def generate():
     results_dir = './results/fit8'
-    output_path = './plots/chart_2.png'
+    output_path = './images/plots/chart_2.png'
 
     if not os.path.exists(results_dir):
         print(f"Error: Directory '{results_dir}' not found.")

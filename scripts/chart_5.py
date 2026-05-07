@@ -5,7 +5,7 @@ import os
 
 def generate():
     results_dir = './results/inter-sample-vectorized'
-    output_path = './plots/chart_5.png'
+    output_path = './images/plots/chart_5.png'
 
     all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv')]
     if not all_files:

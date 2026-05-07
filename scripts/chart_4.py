@@ -5,7 +5,7 @@ import os
 
 def generate():
     results_dir = './results/inter-sample-vectorized'
-    output_path = './plots/chart_4.png'
+    output_path = './images/plots/chart_4.png'
 
     if not os.path.exists(results_dir):
         print(f"Error: Directory '{results_dir}' not found.")

@@ -5,7 +5,7 @@ import os
 
 def generate():
     results_dir = './results/ff'
-    output_path = './plots/chart_1.png'
+    output_path = './images/plots/chart_1.png'
 
     all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv')]
     dataframes = []
