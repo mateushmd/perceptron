@@ -5,7 +5,7 @@ import os
 
 def generate():
     results_dir = './results/fit8'
-    output_path = './images/plots/chart_2.png'
+    output_path = './plots/chart_2.png'
 
     if not os.path.exists(results_dir):
         print(f"Error: Directory '{results_dir}' not found.")
@@ -14,24 +14,22 @@ def generate():
     all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv') and not f.startswith('1')]
     dataframes = []
     for f in all_files:
-         
         df = pd.read_csv(os.path.join(results_dir, f), skipinitialspace=True)
         dataframes.append(df)
     
     master_df = pd.concat(dataframes, ignore_index=True)
-
-    stats = master_df.groupby('Strategy')['TotalTime'].agg(['mean', 'max']).reset_index()
-    
-    plot_df = stats.melt(id_vars='Strategy', var_name='Metric', value_name='Time')
-    plot_df['Metric'] = plot_df['Metric'].replace({'mean': 'Average', 'max': 'Maximum'})
 
     sns.set_theme(style="whitegrid")
     sns.set_context("talk")
 
     plt.figure(figsize=(12, 7))
     
-    ax = sns.barplot(x='Strategy', y='Time', hue='Metric', data=plot_df, palette='viridis',
-            order=['Sequential', 'Intra-layer', 'Inter-sample', 'Inter-sample SIMD'])
+    ax = sns.barplot(x='Strategy', y='TotalTime', data=master_df, palette='viridis',
+                    order=['Sequential', 'Intra-layer', 'Inter-sample', 'Inter-sample SIMD'],
+                    errorbar=('ci', 95), 
+                    capsize=.15,                         
+                    alpha=0.8,                          
+                    err_kws={'linewidth': 2.5, 'color': 'black'}) 
 
     plt.yscale('log')
 

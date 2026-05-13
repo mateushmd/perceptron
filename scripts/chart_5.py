@@ -5,7 +5,7 @@ import os
 
 def generate():
     results_dir = './results/inter-sample-vectorized'
-    output_path = './images/plots/chart_5.png'
+    output_path = './plots/chart_5.png'
 
     all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv')]
     if not all_files:
@@ -36,7 +36,9 @@ def generate():
     plt.figure(figsize=(14, 10)) 
 
     ax = sns.barplot(x='Threads', y='Speedup', data=plot_df, 
-                 palette='viridis', order=thread_order)
+                     palette='viridis', order=thread_order,
+                     errorbar=('ci', 95), capsize=.15, alpha=0.8,
+                     err_kws={'linewidth': 2.5, 'color': 'black'})
 
     plt.axhline(1.0, color='red', linestyle='--', linewidth=3, label='Sequential Baseline')
 
@@ -47,7 +49,7 @@ def generate():
     plt.xticks(fontsize=25) 
     plt.yticks(fontsize=25)
     
-    plt.legend(fontsize=22, loc='upper right', frameon=True, shadow=True)
+    plt.legend(fontsize=22, loc='upper left', frameon=True, shadow=True)
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches='tight')

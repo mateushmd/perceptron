@@ -5,7 +5,7 @@ import os
 
 def generate():
     results_dir = './results/inter-sample-vectorized'
-    output_path = './images/plots/chart_6.png'
+    output_path = './plots/chart_6.png'
 
     all_files = [f for f in os.listdir(results_dir) if f.endswith('.csv')]
     if not all_files: return
@@ -32,7 +32,9 @@ def generate():
     plt.figure(figsize=(14, 10)) 
 
     ax = sns.barplot(x='Threads_Str', y='Efficiency', data=plot_df, 
-                     palette='magma', order=thread_order)
+                     palette='magma', order=thread_order,
+                     errorbar=('ci', 95), capsize=.15, alpha=0.8,
+                     err_kws={'linewidth': 2.5, 'color': 'black'})
 
     plt.axhline(1.0, color='green', linestyle='--', linewidth=3, label='Ideal Efficiency (1.0)')
 
@@ -49,7 +51,7 @@ def generate():
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
-    print(f"generated: {output_path} (Y-Limit: {y_upper_limit:.2f})")
+    print(f"generated: {output_path}")
 
 os.makedirs('./plots', exist_ok=True)
 generate()
